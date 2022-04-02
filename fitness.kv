@@ -1,0 +1,888 @@
+#:import utils kivy.utils
+#:import hex kivy.utils.get_color_from_hex
+#:import Factory kivy.factory.Factory
+
+<SideLayout@GridLayout>:
+    background_normal:''
+    background_color:
+    canvas.before:
+        Color:
+            rgb: hex('#0b1454')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<BLabel@Label>:
+    text_size: root.width, root.height
+    markup: True
+    valign: 'bottom'
+    halign: 'center'
+    color: 0.03,0.08,0.32,1
+
+<DarkLayout@GridLayout>:
+    background_normal:''
+    background_color:
+    canvas.before:
+        Color:
+            rgb: hex('#12151a')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+Manager:
+    id:sc_manager
+    uname:log.uname
+    pword:log.pword
+    user:up.user
+    m1:dcg.m1
+    m2:dcg.m2
+    m3:dcg.m3
+    m4:dcg.m4
+    m5:dcg.m5
+    m6:dcg.m6
+    w1:dwg.w1
+    w2:dwg.w2
+    Login:
+        id:log
+    Register:
+    UserPage:
+        id:up
+    CalorieGrades:
+        id:cg
+    WorkoutGrades:
+        id:wg
+    ProgressReport:
+    SetGoals:
+    DailyLogCal:
+        id:dcg
+    DailyLogWko:
+        id:dwg
+    SwingPage:
+    SetWkoGoals:
+        id:swg
+
+<Login>:
+    name: 'login'
+    uname:uname
+    pword:pword
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'try.png'
+
+    GridLayout:
+        cols:1
+        rows:2
+
+        GridLayout:
+            cols:1
+            size_hint_y:0.72
+
+            Label:
+                text:''
+
+        GridLayout:
+            cols:2
+            size_hint_y:0.28
+
+            Label:
+                text: 'Username'
+                color: 1,.25,.5,1
+                halign: 'left'
+
+            TextInput:
+                id:uname
+
+            Label:
+                text:'Password'
+                color: 1,.25,.5,1
+                background_color:0,0,0,0.5
+
+            TextInput:
+                multiline:False
+                id:pword
+                password:True
+
+            Button:
+                text:'Login'
+                color: 1,.25,.5,1
+                background_color: 0,0,0,0.5
+                on_press: app.disp()
+                on_press:app.passkey()
+
+            Button:
+                text:'Register'
+                color: 1,.25,.5,1
+                background_color: 0,0,0,0.5
+                on_release: app.root.current = 'register'
+
+<DailyLogCal>:
+    name:'dailylogcal'
+    m1:m1
+    m2:m2
+    m3:m3
+    m4:m4
+    m5:m5
+    m6:m6
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:3
+
+        SideLayout:
+            size_hint_x:0.1
+            cols:1
+
+        GridLayout:
+            cols:1
+            rows:3
+            size_hint_x:0.8
+
+            DarkLayout:
+                cols:2
+                size_hint_y:0.15
+
+                Label:
+                    text:'Meals'
+
+                Label:
+                    text:'Calories'
+
+            GridLayout:
+                cols:2
+                size_hint_y:0.7
+
+                Label:
+                    text:'Meal 1'
+
+                TextInput:
+                    id:m1
+                    multiline:False
+
+                Label:
+                    text:'Meal 2'
+
+                TextInput:
+                    id:m2
+                    multiline:False
+
+                Label:
+                    text:'Meal 3'
+
+                TextInput:
+                    id:m3
+                    multiline:False
+
+                Label:
+                    text:'Meal 4'
+
+                TextInput:
+                    id:m4
+                    multiline:False
+
+                Label:
+                    text:'Meal 5'
+
+                TextInput:
+                    id:m5
+                    multiline:False
+
+                Label:
+                    text:'Meal 6'
+
+                TextInput:
+                    id:m6
+                    multiline:False
+
+            DarkLayout:
+                size_hint_y:0.15
+                cols:1
+
+                Button:
+                    text: 'Submit'
+                    background_color:0,0,0,0.5
+                    on_press:app.dailycal()
+                    on_release:app.root.current = 'calgrades'
+
+
+
+        SideLayout:
+            cols:1
+            size_hint_x:0.1
+
+<DailyLogWko>:
+    name:'dailylogwko'
+    w1:w1
+    w2:w2
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:3
+
+        SideLayout:
+            size_hint_x:0.1
+            cols:1
+
+        GridLayout:
+            cols:1
+            rows:3
+            size_hint_x:0.8
+
+            DarkLayout:
+                cols:2
+                size_hint_y:0.15
+
+                Label:
+                    text:'Workout Accountability'
+
+                Label:
+                    text:'Daily Log'
+
+            GridLayout:
+                cols:2
+                size_hint_y:0.7
+
+                Label:
+                    text:'Did you complete your workout?'
+
+                GridLayout:
+                    cols:1
+                    rows:2
+
+                    GridLayout:
+                        cols:1
+                        size_hint_y:0.45
+
+                    GridLayout:
+                        cols:1
+                        size_hint_y:0.55
+
+                        Spinner:
+                            size_hint_y:None
+                            values:app.boole
+                            text_size: root.width, root.height
+                            height:60
+                            id:w1
+                            multiline:False
+
+                Label:
+                    text:'Routine Completion Percentage?(1-100%)'
+
+                TextInput:
+                    id:w2
+                    multiline:False
+
+
+            DarkLayout:
+                size_hint_y:0.15
+                cols:1
+
+                Button:
+                    text: 'Submit'
+                    background_color:0,0,0,0.5
+                    on_press:app.dailywko(w1.text,w2.text)
+                    on_release:app.root.current = 'calgrades'
+
+
+
+        SideLayout:
+            cols:1
+            size_hint_x:0.1
+
+<SwingPage>:
+    name:'swingpage'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:2
+
+        BoxLayout:
+            orientation:'vertical'
+
+            Label:
+                text: 'Calorie Log'
+                font_size:28
+
+            Button:
+                text:'Track Calories'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    app.root.current = 'dailylogcal'
+
+            Button:
+                text:'Homepage'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_press:
+                    app.root.current = 'userpage'
+
+        BoxLayout:
+            orientation:'vertical'
+
+            Label:
+                text: 'Workout Log'
+                font_size:28
+
+            Button:
+                text:'Track Workout'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    app.root.current = 'dailylogwko'
+
+            Button:
+                text:'Homepage'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    app.root.current = 'userpage'
+
+<SetGoals>:
+    name:'sgoals'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:3
+
+        SideLayout:
+            cols:1
+            size_hint_x:0.1
+
+        GridLayout:
+            cols:1
+            rows:2
+            size_hint_x:0.8
+
+            DarkLayout:
+                cols:2
+
+                BLabel:
+                    text: 'Current Weight:'
+                    font_size:20
+                    bold:True
+                    size_hint:(.33,.1)
+
+
+
+                TextInput:
+                    id:cur_weight
+                    multiline:False
+                    size_hint_y:None
+                    height:50
+
+
+                BLabel:
+                    text: 'Goal Weight:'
+                    font_size:20
+                    bold:True
+                    size_hint:(.33,.1)
+
+
+                TextInput:
+                    id:g_weight
+                    multiline:False
+                    size_hint_y: None
+                    height: 50
+
+                BLabel:
+                    text: 'Daily Caloric Intake Goal:'
+                    font_size:20
+                    bold:True
+                    size_hint:(.33,.1)
+
+
+                TextInput:
+                    id:g_intake
+                    multiline:False
+                    size_hint_y: None
+                    height: 50
+
+            BoxLayout:
+                cols:2
+                size_hint_y:.22
+
+                Button:
+                    text:'Go Back'
+                    on_release:
+                        app.root.current = 'userpage'
+                    background_color: 0,0,0,0.5
+                    size_hint_y: None
+                    height: 50
+
+                Button:
+                    text:"Submit"
+                    on_press:
+                        app.set_targets(cur_weight.text,g_weight.text,g_intake.text)
+                    on_release:
+                        app.root.current = 'swgoals'
+                    background_color: 0,0,0,0.5
+                    size_hint_y: None
+                    height: 50
+
+        SideLayout:
+            cols:1
+            size_hint_x:0.1
+
+<SetWkoGoals>:
+    name:'swgoals'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:3
+
+        SideLayout:
+            cols:1
+
+        DarkLayout:
+            cols:2
+
+            Label:
+                text:'Number of workout days per week?(Sun-Sat)'
+                font_size:20
+                bold:True
+                size_hint:(.33,.1)
+
+            TextInput:
+                id:wk_sched
+                multiline:False
+                size_hint_y: None
+                height: 50
+
+            Label:
+                text:'Weightlifting Rep-Range?'
+                font_size:20
+                bold:True
+                size_hint:(.33,.1)
+
+            TextInput:
+                id:g_vol
+                multiline:False
+                size_hint_y: None
+                height: 50
+
+            Button:
+                text:'Home'
+
+            Button:
+                text:'Submit'
+                on_press:app.wko_targets(wk_sched.text,g_vol.text)
+
+        SideLayout:
+            cols:1
+
+<UserPage>:
+    name:'userpage'
+    user:user
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:1
+
+        Label:
+            id:user
+            text:f' Welcome back {app.username}'
+            font_size: 32
+            color: hex('#0b1454')
+
+
+        GridLayout:
+            cols:1
+
+            Button:
+                text:'Set Goal'
+                on_press:app.root.current = 'sgoals'
+                size_hint:(0.15,0.2)
+                pos:(50,650)
+                background_color: 0,0,1,.5
+
+            Button:
+                text:'Track Goal'
+                anchor_x:'left'
+                anchor_y:'center'
+                size_hint:(0.15,0.2)
+                pos:(50,425)
+                background_color: 0,0,1,.5
+                on_release:
+                    app.root.current='preport'
+
+            Button:
+                text:'Daily Log'
+                anchor_x:'left'
+                anchor_y:'bottom'
+                size_hint:(0.15,0.2)
+                pos:(50,200)
+                background_color: 0,0,1,.5
+                on_release:
+                    app.root.current = 'swingpage'
+
+        BoxLayout:
+            cols:3
+
+            Button:
+                text:'Back'
+                size_hint:(0.35,0.4)
+                on_release: app.root.current = 'login'
+                background_color: 0,0,0,0.5
+
+            Button:
+                text:'Home'
+                size_hint:(0.35,0.4)
+                on_release: app.root.current = 'userpage'
+                background_color: 0,0,0,0.5
+
+            Button:
+                text: 'Close'
+                size_hint:(0.35,0.4)
+                on_release: app.stop()
+                background_color: 0,0,0,0.5
+
+<Register>:
+    name: 'register'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:1
+
+        GridLayout:
+            cols:3
+
+            SideLayout:
+                cols:1
+                size_hint_x:0.15
+
+            GridLayout:
+                cols:1
+                size_hint_x:0.7
+
+                DarkLayout:
+                    cols:2
+                    rows:6
+
+                    Label:
+                        text:'First Name'
+
+                    TextInput:
+                        id:fname
+                        multiline:False
+                        size_hint_y:None
+                        height:40
+
+                    Label:
+                        text:'Last Name'
+
+                    TextInput:
+                        id:lname
+                        multiline:False
+                        size_hint_y:None
+                        height:40
+
+                    Label:
+                        text:'Username'
+
+                    TextInput:
+                        id:uname
+                        multiline:False
+                        size_hint_y:None
+                        height:40
+
+                    Label:
+                        text:'Email'
+
+                    TextInput:
+                        id:email
+                        multiline:False
+                        size_hint_y:None
+                        height:40
+
+                    Label:
+                        text:'Password'
+
+                    TextInput:
+                        id:pword
+                        multiline:False
+                        size_hint_y:None
+                        height:40
+
+                GridLayout:
+                    cols:1
+                    size_hint_y:0.15
+
+                    Button:
+                        text: 'submit'
+                        on_press:app.reg(uname.text,email.text,fname.text,pword.text)
+
+            SideLayout:
+                cols:1
+                size_hint_x:0.15
+
+<CalorieGrades>:
+    name:'calgrades'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:3
+
+        DarkLayout:
+            cols:1
+            rows:3
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+                Label:
+                    text:'Duration:'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.7
+
+                Spinner:
+                    text:'This Week'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+        SideLayout:
+            cols:1
+            rows:3
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+                Label:
+                    text:'Details:'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.7
+
+                Label:
+                    text:'Total Calories:'
+
+                Label:
+                    id:totalcals
+                    text:''
+
+                Label:
+                    text:''
+
+                Label:
+                    text:'Goal Calories'
+
+                Label:
+                    id:goalcals
+                    text:''
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+        DarkLayout:
+            cols:1
+            rows:3
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+                Label:
+                    text:'Grade'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.7
+
+                Label:
+                    id:calsgrade
+                    text:''
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+<WorkoutGrades>:
+    name:'wgrades'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:3
+
+        DarkLayout:
+            cols:1
+            rows:3
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+                Label:
+                    text:'Duration:'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.7
+
+                Spinner:
+                    text:'This Week'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+        SideLayout:
+            cols:1
+            rows:3
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+                Label:
+                    text:'Details:'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.7
+
+                Label:
+                    text:'Accountability Report'
+
+                Label:
+                    id:wko_acc
+                    text:''
+
+                Label:
+                    text:'Volume Report'
+
+                Label:
+                    id:wko_vol
+                    text:''
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+        DarkLayout:
+            cols:1
+            rows:3
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+                Label:
+                    text:'Grade'
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.7
+
+                Label:
+                    id:wkosgrade
+                    text:''
+
+            GridLayout:
+                cols:1
+                size_hint_y:0.15
+
+<ProgressReport>:
+    name:'preport'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fitness5.jpg'
+
+    GridLayout:
+        cols:2
+
+        BoxLayout:
+            orientation:'vertical'
+
+            Label:
+                text: 'Calorie Report'
+                font_size:28
+
+            Button:
+                text:'Go'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    app.root.current = 'calgrades'
+
+            Button:
+                text:'Homepage'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_press:
+                    app.root.current = 'userpage'
+
+        BoxLayout:
+            orientation:'vertical'
+
+            Label:
+                text: 'Workout Report'
+                font_size:28
+
+            Button:
+                text:'Go'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    app.root.current = 'wgrades'
+
+            Button:
+                text:'Homepage'
+                background_color: 0,0,0,0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    app.root.current = 'userpage'
